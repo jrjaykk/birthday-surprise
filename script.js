@@ -6,90 +6,107 @@ function unlock() {
     const input =
         document.getElementById("password").value;
 
-
     const wrong =
         document.getElementById("wrong");
 
 
     if (input === SECRET_PASSWORD) {
 
-
         document.getElementById("lockScreen")
             .style.display = "none";
-
 
         document.getElementById("website")
             .classList.remove("hidden");
 
-
         createHearts();
 
-
-    }
-
-    else {
-
+    } else {
 
         const messages = [
-
             "Hmm... try again 😏",
-
             "Nope 😂 You know the password!",
-
             "Wrong one, jaan 😌",
-
             "Nice try 👀",
-
             "Think about us ❤️"
-
         ];
-
 
         wrong.innerText =
             messages[
                 Math.floor(
-                    Math.random() *
-                    messages.length
+                    Math.random() * messages.length
                 )
             ];
 
-
         document.getElementById("password")
             .value = "";
-
     }
-
 }
 
 
 
-function showFinal() {
+function nextSurprise(number) {
 
-    document.getElementById("final")
-        .classList.remove("hidden");
+    document
+        .querySelectorAll(".surprise")
+        .forEach(section => {
+            section.classList.remove("active");
+        });
+
+
+    const next =
+        document.getElementById(
+            "surprise" + number
+        );
+
+
+    next.classList.add("active");
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
 
     createHearts();
+}
 
+
+
+function rightAnswer() {
+
+    const message =
+        document.getElementById("gameMessage");
+
+    message.innerText =
+        "Correct! 😌❤️ You got it.";
+
+    setTimeout(() => {
+        nextSurprise(8);
+    }, 1500);
+}
+
+
+
+function wrongAnswer() {
+
+    const message =
+        document.getElementById("gameMessage");
+
+    message.innerText =
+        "Hmm... nice try 😏 Try again ❤️";
 }
 
 
 
 function createHearts() {
 
-    for (
-        let i = 0;
-        i < 35;
-        i++
-    ) {
-
+    for (let i = 0; i < 18; i++) {
 
         const heart =
             document.createElement("div");
 
-
         heart.className = "heart";
-
 
         heart.innerText =
             [
@@ -104,17 +121,14 @@ function createHearts() {
                 )
             ];
 
-
         heart.style.left =
             Math.random() * 100 + "vw";
-
 
         heart.style.animationDuration =
             (
                 4 +
                 Math.random() * 4
             ) + "s";
-
 
         heart.style.animationDelay =
             Math.random() * 2 + "s";
@@ -124,11 +138,7 @@ function createHearts() {
 
 
         setTimeout(() => {
-
             heart.remove();
-
         }, 9000);
-
     }
-
 }
